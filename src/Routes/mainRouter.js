@@ -1,7 +1,10 @@
 const {Router}=require("express");
-const userRouter=require("./Users/userRouter");
+const mainCountries=require("./countries/mainCountries");
+//const mainActivities=require("./activities/")
 const mainRouter=Router();
 
-mainRouter.use("/users",userRouter);
+mainRouter.use("/countries",mainCountries);
+//mainRouter.use("/activiy",mainActivities);
+
 
 module.exports=mainRouter;
