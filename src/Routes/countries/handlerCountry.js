@@ -1,4 +1,6 @@
-const {controllerDataBase,controllerOneCountry,controllerByName}=require("./controllerCountry")
+const {controllerDataBase,controllerOneCountry,controllerByName}=require("./controllerCountry");
+
+
 const getAllHandlerCountries=async(req,res)=>{
     const {name}=req.query;
     try {
@@ -26,23 +28,15 @@ const getHandlerCountry=async(req,res)=>{
             res.status(400).json({error:error.message});
         }
 };
-const postHandlerCountries=(req,res)=>{
-    res.send("soy ruta post");
-}
-const putHandlerCountries=(req,res)=>{
-    res.send("update countries")
-};
-const deleteHandlerCountries=(req,res)=>{
-    res.send("delete countries")
-};
+
+
 
 
 
 module.exports={
     getAllHandlerCountries,
     getHandlerCountry,
-    putHandlerCountries,
-    deleteHandlerCountries,
-    postHandlerCountries
+    
+    
 
 }

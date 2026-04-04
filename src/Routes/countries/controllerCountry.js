@@ -1,21 +1,33 @@
-const {Country}=require("../../db.")
-const loadCountriesApi=require("../../utils/json")
+const {Country}=require("../../db.");
+const loadCountriesApi=require("../../utils/json");
+const {Op}=require("sequelize");
 
 const controllerDataBase = async () => {
     
     await loadCountriesApi(); 
-    const allCountries = await Country.findAll();
+    const allCountries = await Country.findAll({attributes:["name","flag","continent"]});
     return allCountries;
 };
-const controllerByName=async({name})=>{
-    return await Country.findAll({where:{name:name}})
-
-
-}
 const controllerOneCountry = async({id})=>{
-     console.log(id)
-    return await Country.findByPk(id)
+     const oneCountry=await Country.findByPk(id);
+    if(!oneCountry) throw Error("No existe este País...");
+    return oneCountry;
 }
+const controllerByName=async({name})=>{
+    const cleanName = name.trim();
+    const countries = await Country.findAll({
+    where: {
+        name: {
+            [Op.iLike]: `%${cleanName}%` 
+        }
+    }
+});
+if (countries.length === 0) throw Error(`No se encontraron países con el nombre: ${name}`);
+return countries;
+
+
+}
+
 
 module.exports={
     controllerDataBase,

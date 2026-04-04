@@ -32,10 +32,7 @@ module.exports=((sequelize)=>{
          poblation: {
             type: DataTypes.INTEGER,
          },
-         isActive:{
-            type:DataTypes.BOOLEAN,
-            defaultValue:true
-         }
+        
 
-    })
+    },{timestamps:false})
 });
