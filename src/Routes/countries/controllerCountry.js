@@ -1,11 +1,12 @@
 const {Country}=require("../../db.");
 const loadCountriesApi=require("../../utils/json");
-const {Op}=require("sequelize");
+const {Op,fn,col}=require("sequelize");
 
 const controllerDataBase = async () => {
     
     await loadCountriesApi(); 
-    const allCountries = await Country.findAll({attributes:["name","flag","continent"]});
+    
+    const allCountries = await Country.findAll({attributes:["name","flag","continent"],order:[["name","ASC"]]});
     return allCountries;
 };
 const controllerOneCountry = async({id})=>{
@@ -20,7 +21,10 @@ const controllerByName=async({name})=>{
         name: {
             [Op.iLike]: `%${cleanName}%` 
         }
-    }
+    },
+    order:[[
+        "name","ASC"
+    ]]
 });
 if (countries.length === 0) throw Error(`No se encontraron países con el nombre: ${name}`);
 return countries;
